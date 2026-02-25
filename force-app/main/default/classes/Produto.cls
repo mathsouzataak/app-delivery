@@ -9,7 +9,7 @@ public with sharing class Produto {
     }
 
     public override String toString() {
-        return 'Nome: ' + nome + '\tPreço: ' + preco.toString();
+        return nome + ' – R$' + preco.setScale(2);
     }
 
 }
