@@ -13,3 +13,6 @@ System.debug('My name is ' + tempvar);
 Produto prod = new Produto('Macarrão', 25);
 
 System.debug(prod.toString());
+
+Restaurante rest = new Restaurante('Comidations', 'Rua jhqiuefhl fas 1015', CategoriaRestaurante.LANCHONETE);
+

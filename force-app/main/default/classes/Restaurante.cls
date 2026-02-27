@@ -2,10 +2,10 @@ public with sharing class Restaurante {
 
     public String nome;
     public String endereco;
-    public CategoriaResturante categoria;
+    public CategoriaRestaurante categoria;
     public List<Produto> cardapio;
 
-    public Restaurante(String nome, String endereco, CategoriaResturante categoria) {
+    public Restaurante(String nome, String endereco, CategoriaRestaurante categoria) {
         this.nome = nome;
         this.endereco = endereco;
         this.categoria = categoria;
