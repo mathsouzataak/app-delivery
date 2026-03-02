@@ -24,6 +24,28 @@ public with sharing class GeradorRelatorio {
         return relatorio;
     }
 
+    public static Map<String, List<Pedido>> gerarRelatorioPedidosPorCliente(List<Pedido> pedidos, List<String> cpfs) {
+        Map<String,List<Pedido>> relatorio = new Map<String,List<Pedido>>();
+
+        for (String cpf : cpfs) {
+            relatorio.put(cpf, new List<Pedido>());
+        }
+
+        for (Pedido ped : pedidos) {
+            if (relatorio.containsKey(ped.cliente.cpf)) {
+                relatorio.get(ped.cliente.cpf).add(ped);
+            } else {
+                relatorio.put(ped.cliente.cpf, new List<Pedido> {ped});
+            }
+        }
+
+        for (String cpf : relatorio.keySet()) {
+            System.debug('Cliente: ' + cpf + ' - ' + relatorio.get(cpf).size() + 'pedidos');
+        }
+
+        return relatorio;
+    }
+
 
 
     private class ComparadorProdutoPorQtd implements Comparator<Produto> {
