@@ -49,33 +49,6 @@ public with sharing class Restaurante {
 
         return produtosEncontrados;
     }
-
-    public Map<Produto, Integer> gerarRelatorioProdutosMaisVendidos(List<Pedido> pedidos) {
-        Map<Produto, Integer> relatorio = new Map<Produto,Integer>();
-
-        for (Pedido pedido : pedidos) {
-            for (ItemPedido item : pedido.itens) {
-                if (relatorio.containsKey(item.produto)) {
-                    relatorio.put(item.produto, relatorio.get(item.produto) + item.quantidade);
-                } else {
-                    relatorio.put(item.produto, item.quantidade);
-                }
-            }
-        }
-
-        List<Produto> prods = new List<Produto>(relatorio.keySet());
-
-        prods.sort(new ComparadorProdutoPorQtd(relatorio));
-
-        System.debug('Top 3 produtos mais vendidos: ');
-        for (Integer i = 1; i <= 3; i++) {
-            if (prods[prods.size() - 1] != null) {
-                System.debug(i + '. ' + prods[i-1].nome + ' - ' + relatorio.get(prods[i-1]));
-            }
-        }
-
-        return relatorio;
-    }
 }
 
 
