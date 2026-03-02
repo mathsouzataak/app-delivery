@@ -25,7 +25,7 @@ Pedido pedido = new Pedido(cliente, rest);
 
 pedido.adicionarItemPedido(prod, 5);
 
-pedido.exibirResumo()
+pedido.exibirResumo();
 
 
 
