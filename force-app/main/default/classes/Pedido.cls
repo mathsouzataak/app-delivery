@@ -47,7 +47,7 @@ public with sharing class Pedido {
         System.debug('Restaurante: ' + restaurante.nome);
         System.debug('Itens do pedido: ');
         for (ItemPedido item : itens) {
-            System.debug('\t' + item.produto.nome + ' (' + item.quantidade + 'x) - ' + item.subTotal);
+            System.debug('\t' + item.produto.nome + ' (' + item.quantidade + 'x) - ' + 'R$' + item.subTotal.setScale(2));
         }
         System.debug('Status: ' + status.name());
     }
