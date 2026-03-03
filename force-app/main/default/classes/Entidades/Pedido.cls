@@ -35,18 +35,17 @@ public with sharing class Pedido extends EntidadeBase {
     }
 
     public void adicionarItemPedido(Produto produto, Integer quantidade) {
-        if (contemProduto(produto)) {
-            System.debug('O produto já está no pedido');
-            return;
-        }
-
         if (quantidade <= 0) {
-            System.debug('A quantidade deve ser maior que zero');
-            return;
+            throw new IllegalArgumentException('A quantidade não pode ser negativa');
         }
 
         if (restaurante.getCardapio().contains(produto)) {
-            itens.add(new ItemPedido(produto, quantidade));
+            ItemPedido item = buscarItem(produto);
+            if (item != null) {
+                item.setQuantidade(item.getQuantidade() + quantidade);
+            } else {
+                itens.add(new ItemPedido(produto, quantidade));
+            }
             System.debug('Item adicionado ao pedido');
             calcularTotal();
         } else {
@@ -54,20 +53,50 @@ public with sharing class Pedido extends EntidadeBase {
         }
     }
 
-    public Boolean contemProduto(Produto produto) {
+    public void removerProduto (Produto produto) {
+        Integer index = buscarIndexItem(produto);
+        if (index >= 0) {
+            itens.remove(index);
+            calcularTotal();
+        }
+    }
+
+    public void alterarQuantidade(Produto produto, Integer novaQuantidade) {
+        if (novaQuantidade <= 0) {
+            removerProduto(produto);
+        } else {
+            ItemPedido item = buscarItem(produto);
+            if (item != null) {
+                item.setQuantidade(novaQuantidade);
+                calcularTotal();
+            }
+        }
+    } 
+
+    public ItemPedido buscarItem(Produto produto) {
         for (ItemPedido item : itens) {
             if (item.produto == produto) {
-                return true;
+                return item;
             }
         }
 
-        return false;
+        return null;
+    }
+
+    public Integer buscarIndexItem(Produto produto) {
+        for (Integer i = 0; i < itens.size(); i++) {
+            if (itens[i].produto == produto) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public void calcularTotal() {
         Decimal valor = 0;
         for (ItemPedido item : itens) {
-            valor += item.subTotal;
+            valor += item.subTotal.valor;
         }
 
         total = new Dinheiro(valor);
@@ -87,7 +116,7 @@ public with sharing class Pedido extends EntidadeBase {
         System.debug('Restaurante: ' + restaurante.getNome());
         System.debug('Itens do pedido: ');
         for (ItemPedido item : itens) {
-            System.debug('\t' + item.produto.getNome() + ' (' + item.quantidade + 'x) - ' + 'R$' + item.subTotal.setScale(2));
+            System.debug('\t' + item.produto.getNome() + ' (' + item.quantidade + 'x) - ' + 'R$' + item.subTotal.valor.setScale(2));
         }
         System.debug('Total: R$' + total.valor.setScale(2));
         System.debug('Status: ' + status.name());
@@ -103,8 +132,7 @@ public with sharing class Pedido extends EntidadeBase {
 
         private ItemPedido(Produto produto, Integer quantidade) {
             this.produto = produto;
-            this.quantidade = quantidade;
-            calcularSubtotal();
+            setQuantidade(quantidade);
         }
 
         public Produto getProduto() {
@@ -121,9 +149,10 @@ public with sharing class Pedido extends EntidadeBase {
             }
 
             this.quantidade = quantidade;
+            calcularSubtotal();
         }
 
-        public Decimal getSubTotal() {
+        public Dinheiro getSubTotal() {
             return subTotal;
         }
 
