@@ -16,4 +16,8 @@ public with sharing class Endereco {
         return this.logradouro == endereco.logradouro && this.numero == endereco.numero &&
                 this.complemento == endereco.complemento && this.cidade == endereco.cidade;
     }
+
+    public override String toString() {
+        return logradouro + ' ' + numero + (String.isNotBlank(complemento) ? ' (' + complemento + ')' : '') + ', ' + cidade;
+    }
 }

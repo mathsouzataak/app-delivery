@@ -33,10 +33,10 @@ public class GeradorRelatorio {
         }
 
         for (Pedido ped : pedidos) {
-            if (relatorio.containsKey(ped.cliente.cpf)) {
-                relatorio.get(ped.cliente.cpf).add(ped);
+            if (relatorio.containsKey(ped.cliente.documento.cpf)) {
+                relatorio.get(ped.cliente.documento.cpf).add(ped);
             } else {
-                relatorio.put(ped.cliente.cpf, new List<Pedido> {ped});
+                relatorio.put(ped.cliente.documento.cpf, new List<Pedido> {ped});
             }
         }
 

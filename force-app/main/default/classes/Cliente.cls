@@ -1,18 +1,20 @@
-public with sharing class Cliente {
+public with sharing class Cliente extends Pessoa {
 
-    public String nome;
-    public String cpf;
-    public String endereco;
+    public Endereco endereco;
     public String telefone;
+    // public Telefone telefone;
 
-    public Cliente(String nome, String cpf, String endereco, String telefone) {
-        this.nome = nome;
-        this.cpf = cpf;
+    public Cliente(String nome, Documento documento, Endereco endereco, String telefone) {
+        super(nome, documento);
         this.endereco = endereco;
         this.telefone = telefone;
     }
 
     public override String toString() {
-        return 'Nome: ' + nome + '\tCPF: ' + cpf + '\tEndereço: ' + endereco + '\tTelefone: ' + telefone;
+        return 'Nome: ' + nome + '\tCPF: ' + documento.cpf + '\tEndereço: ' + endereco.toString() + '\tTelefone: ' + telefone;
+    }
+
+    public override String getTipoPessoa() {
+        return 'Cliente';
     }
 }
