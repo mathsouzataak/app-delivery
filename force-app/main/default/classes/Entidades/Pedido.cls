@@ -1,21 +1,41 @@
 public with sharing class Pedido extends EntidadeBase {
 
-    public Cliente cliente;
-    public Restaurante restaurante;
-    public List<ItemPedido> itens;
-    public StatusPedido status;
-    public Decimal total;
+    private Cliente cliente;
+    private Restaurante restaurante;
+    private List<ItemPedido> itens;
+    private StatusPedido status;
+    private Dinheiro total;
 
     public Pedido(Cliente cliente, Restaurante restaurante) {
         this.cliente = cliente;
         this.restaurante = restaurante;
         itens = new List<ItemPedido>();
         status = StatusPedido.CARRINHO;
-        total = 0;
+        total = new Dinheiro(0);
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
+
+    public List<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public StatusPedido getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusPedido status) {
+        this.status = status; 
     }
 
     public void adicionarItemPedido(Produto produto, Integer quantidade) {
-        if (restaurante.cardapio.contains(produto)) {
+        if (restaurante.getCardapio().contains(produto)) {
             itens.add(new ItemPedido(produto, quantidade));
             System.debug('Item adicionado ao pedido');
             calcularTotal();
@@ -30,7 +50,7 @@ public with sharing class Pedido extends EntidadeBase {
             valor += item.subTotal;
         }
 
-        total = valor;
+        total = new Dinheiro(valor);
     }
 
     public void confirmarPedido() {
@@ -43,12 +63,13 @@ public with sharing class Pedido extends EntidadeBase {
     }
 
     public void exibirResumo() {
-        System.debug('Cliente: ' + Cliente.nome);
-        System.debug('Restaurante: ' + restaurante.nome);
+        System.debug('Cliente: ' + cliente.getNome());
+        System.debug('Restaurante: ' + restaurante.getNome());
         System.debug('Itens do pedido: ');
         for (ItemPedido item : itens) {
-            System.debug('\t' + item.produto.nome + ' (' + item.quantidade + 'x) - ' + 'R$' + item.subTotal.setScale(2));
+            System.debug('\t' + item.produto.getNome() + ' (' + item.quantidade + 'x) - ' + 'R$' + item.subTotal.setScale(2));
         }
+        System.debug('Total: R$' + total.valor.setScale(2));
         System.debug('Status: ' + status.name());
     }
 }

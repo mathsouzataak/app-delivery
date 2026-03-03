@@ -11,6 +11,6 @@ public with sharing class ItemPedido {
     }
 
     public void calcularSubtotal() {
-        subTotal = produto.preco * quantidade;
+        subTotal = produto.getPreco().multiplicar(quantidade);
     }
 }

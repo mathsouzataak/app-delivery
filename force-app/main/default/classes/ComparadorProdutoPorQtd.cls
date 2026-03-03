@@ -14,11 +14,11 @@ public class ComparadorProdutoPorQtd implements Comparator<Produto> {
             return -1;
         }
 
-        if (prod1.nome > prod2.nome) {
+        if (prod1.getNome() > prod2.getNome()) {
             return 1;
         }
 
-        if (prod1.nome < prod2.nome) {
+        if (prod1.getNome() < prod2.getNome()) {
             return -1;
         }
 

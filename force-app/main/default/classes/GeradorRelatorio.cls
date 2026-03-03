@@ -4,7 +4,7 @@ public class GeradorRelatorio {
         Map<Produto, Integer> relatorio = new Map<Produto,Integer>();
 
         for (Pedido pedido : pedidos) {
-            for (ItemPedido item : pedido.itens) {
+            for (ItemPedido item : pedido.getItens()) {
                 if (relatorio.containsKey(item.produto)) {
                     relatorio.put(item.produto, relatorio.get(item.produto) + item.quantidade);
                 } else {
@@ -19,7 +19,7 @@ public class GeradorRelatorio {
 
         System.debug('Top 3 produtos mais vendidos: ');
         for (Integer i = 1; i <= prods.size() && i <= 3; i++) {
-            System.debug(i + '. ' + prods[i-1].nome + ' - ' + relatorio.get(prods[i-1]) + ' unidades');
+            System.debug(i + '. ' + prods[i-1].getNome() + ' - ' + relatorio.get(prods[i-1]) + ' unidades');
         }
 
         return relatorio;
@@ -33,10 +33,10 @@ public class GeradorRelatorio {
         }
 
         for (Pedido ped : pedidos) {
-            if (relatorio.containsKey(ped.cliente.documento.cpf)) {
-                relatorio.get(ped.cliente.documento.cpf).add(ped);
+            if (relatorio.containsKey(ped.getCliente().getDocumento().cpf)) {
+                relatorio.get(ped.getCliente().getDocumento().cpf).add(ped);
             } else {
-                relatorio.put(ped.cliente.documento.cpf, new List<Pedido> {ped});
+                relatorio.put(ped.getCliente().getDocumento().cpf, new List<Pedido> {ped});
             }
         }
 

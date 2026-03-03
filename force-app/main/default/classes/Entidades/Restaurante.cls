@@ -1,20 +1,45 @@
 public with sharing class Restaurante extends EntidadeBase {
 
-    public String nome;
-    public String endereco;
-    public CategoriaRestaurante categoria;
+    private String nome;
+    private Endereco endereco;
+    private CategoriaRestaurante categoria;
     public List<Produto> cardapio;
 
-    public Restaurante(String nome, String endereco, CategoriaRestaurante categoria) {
+    public Restaurante(String nome, Endereco endereco, CategoriaRestaurante categoria) {
         this.nome = nome;
         this.endereco = endereco;
         this.categoria = categoria;
         this.cardapio = new List<Produto>();
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        if (String.isBlank(nome)) {
+            throw new IllegalArgumentException('Nome do restaurante não pode ser vazio');
+        }
+        this.nome = nome;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public CategoriaRestaurante getCategoria() {
+        return categoria;
+    }
+
+    public List<Produto> getCardapio() {
+        return cardapio;
+    }
+
+
+
     public void adicionarProduto(Produto produto) {
         for (Produto prod : cardapio) {
-            if (prod.nome.toLowerCase() == produto.nome.toLowerCase()) {
+            if (prod.getNome().toLowerCase() == produto.getNome().toLowerCase()) {
                 System.debug('Este produto já existe no cardápi.');
                 return;
             }
@@ -37,7 +62,7 @@ public with sharing class Restaurante extends EntidadeBase {
     public List<Produto> buscarProdutos(String termoBusca) {
         List<Produto> produtosEncontrados = new List<Produto>();
         for (Produto produto : cardapio) {
-            if (produto.nome.toLowerCase().contains(termoBusca.toLowerCase())) {
+            if (produto.getNome().toLowerCase().contains(termoBusca.toLowerCase())) {
                 produtosEncontrados.add(produto);
                 System.debug(produto.toString());
             }
