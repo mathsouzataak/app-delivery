@@ -46,9 +46,7 @@ List<Pedido> pedidos = new List<Pedido> { pedido, pedido2 };
 
 GeradorRelatorio.gerarRelatorioProdutosMaisVendidos(pedidos);
 
-List<String> cpfs = new List<String>{cliente.cpf, cliente2.cpf};
-
-GeradorRelatorio.gerarRelatorioPedidosPorCliente(pedidos, cpfs);
+GeradorRelatorio.gerarRelatorioPedidosPorCliente(pedidos, new List<String>{cliente.cpf, cliente2.cpf});
 
 
 
