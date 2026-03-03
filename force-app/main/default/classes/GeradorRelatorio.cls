@@ -4,11 +4,11 @@ public class GeradorRelatorio {
         Map<Produto, Integer> relatorio = new Map<Produto,Integer>();
 
         for (Pedido pedido : pedidos) {
-            for (ItemPedido item : pedido.getItens()) {
-                if (relatorio.containsKey(item.produto)) {
-                    relatorio.put(item.produto, relatorio.get(item.produto) + item.quantidade);
+            for (Pedido.ItemPedido item : pedido.getItens()) {
+                if (relatorio.containsKey(item.getProduto())) {
+                    relatorio.put(item.getProduto(), relatorio.get(item.getProduto()) + item.getQuantidade());
                 } else {
-                    relatorio.put(item.produto, item.quantidade);
+                    relatorio.put(item.getProduto(), item.getQuantidade());
                 }
             }
         }
