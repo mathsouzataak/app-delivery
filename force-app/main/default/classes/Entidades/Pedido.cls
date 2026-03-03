@@ -1,4 +1,4 @@
-public with sharing class Pedido {
+public with sharing class Pedido extends EntidadeBase {
 
     public Cliente cliente;
     public Restaurante restaurante;

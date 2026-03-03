@@ -1,4 +1,4 @@
-public with sharing class Restaurante {
+public with sharing class Restaurante extends EntidadeBase {
 
     public String nome;
     public String endereco;
@@ -15,7 +15,7 @@ public with sharing class Restaurante {
     public void adicionarProduto(Produto produto) {
         for (Produto prod : cardapio) {
             if (prod.nome.toLowerCase() == produto.nome.toLowerCase()) {
-                System.debug('Este produto já existe no cardápio.');
+                System.debug('Este produto já existe no cardápi.');
                 return;
             }
         }

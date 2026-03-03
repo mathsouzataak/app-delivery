@@ -10,8 +10,8 @@ System.debug('Hello World!');
 System.debug('My name is ' + tempvar);
 
 
-Cliente cliente = new Cliente('Matheus', '000000000-00', 'bqljkhsdgvqiwuedv', '00000000');
-Cliente cliente2 = new Cliente('Pedrinho', '123456789-00', 'adasdasdasda', '00012000');
+Cliente cliente = new Cliente('Matheus', new Documento('000000000-00'), new Endereco('abc', 1, 'defg', 'hijk'), '00000000');
+Cliente cliente2 = new Cliente('Pedrinho', new Documento('123456789-00'), new Endereco('amm', 1, 'def', 'nnjk'), '00012000');
 System.debug(cliente.toString());
 
 Produto prod = new Produto('Macarrão', 25);
@@ -46,7 +46,7 @@ List<Pedido> pedidos = new List<Pedido> { pedido, pedido2 };
 
 GeradorRelatorio.gerarRelatorioProdutosMaisVendidos(pedidos);
 
-GeradorRelatorio.gerarRelatorioPedidosPorCliente(pedidos, new List<String>{cliente.cpf, cliente2.cpf});
+GeradorRelatorio.gerarRelatorioPedidosPorCliente(pedidos, new List<String>{cliente.documento.cpf, cliente2.documento.cpf});
 
 
 
