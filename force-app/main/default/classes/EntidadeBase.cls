@@ -1,13 +1,9 @@
 public with sharing abstract class EntidadeBase {
 
-    private UUID id;
+    public final UUID id;
 
     public EntidadeBase() {
         id = UUID.randomUUID();
-    }
-
-    public UUID getId() {
-        return id;
     }
 
     public Boolean equals(EntidadeBase entidade) {
