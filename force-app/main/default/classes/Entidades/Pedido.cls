@@ -99,7 +99,7 @@ public with sharing class Pedido extends EntidadeBase {
 
         private Produto produto;
         private Integer quantidade;
-        private Decimal subTotal;
+        private Dinheiro subTotal;
 
         private ItemPedido(Produto produto, Integer quantidade) {
             this.produto = produto;
@@ -115,12 +115,20 @@ public with sharing class Pedido extends EntidadeBase {
             return quantidade;
         }
 
+        private void setQuantidade(Integer quantidade) {
+            if (quantidade <= 0) {
+                throw new IllegalArgumentException('A quantidade deve ser maior que zero');
+            }
+
+            this.quantidade = quantidade;
+        }
+
         public Decimal getSubTotal() {
             return subTotal;
         }
 
         private void calcularSubtotal() {
-            subTotal = produto.getPreco().multiplicar(quantidade);
+            subTotal = new Dinheiro(produto.getPreco().multiplicar(quantidade));
         }
     }
 }
