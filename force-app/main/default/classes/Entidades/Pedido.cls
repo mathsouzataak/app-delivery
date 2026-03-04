@@ -116,13 +116,16 @@ public with sharing class Pedido extends EntidadeBase {
         System.debug('Restaurante: ' + restaurante.getNome());
         System.debug('Itens do pedido: ');
         for (ItemPedido item : itens) {
-            System.debug('\t' + item.produto.getNome() + ' (' + item.quantidade + 'x) - ' + 'R$' + item.subTotal.valor.setScale(2));
+            System.debug('\t' + item.produto.getNome() + ' (' + item.quantidade + 'x) - ' + 'R$' + item.getSubTotal().valor.setScale(2));
         }
+
+        calcularTotal();
         System.debug('Total: R$' + total.valor.setScale(2));
         System.debug('Status: ' + status.name());
     }
 
-
+    // TODO: ItemPedido e Pedido devem atualizar seus totais sempre que preço ou politica de um produto for alterado.
+    // Buscar modo de fazer isso.
 
     public class ItemPedido {
 
@@ -152,6 +155,7 @@ public with sharing class Pedido extends EntidadeBase {
         }
 
         public Dinheiro getSubTotal() {
+            calcularSubtotal();
             return subTotal;
         }
 

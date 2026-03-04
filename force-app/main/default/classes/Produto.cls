@@ -4,10 +4,10 @@ public with sharing class Produto {
     private Dinheiro precoBase;
     private PoliticaDePreco politicaDePreco;
     
-    public Produto(String nome, Dinheiro precoBase, PoliticaDePreco politicDePreco) {
+    public Produto(String nome, Dinheiro precoBase, PoliticaDePreco politicaDePreco) {
         this.nome = nome;
         this.precoBase = precoBase;
-        this.politicaDePreco = politicDePreco;
+        this.politicaDePreco = politicaDePreco;
     }
 
     public String getNome() {
@@ -40,7 +40,7 @@ public with sharing class Produto {
 
 
     public override String toString() {
-        return nome + ' – R$' + precoBase.valor.setScale(2);
+        return nome + ' – R$' + calcularPrecoFinal().valor.setScale(2);
     }
 
 }
