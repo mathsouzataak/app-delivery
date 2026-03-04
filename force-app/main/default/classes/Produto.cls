@@ -1,11 +1,12 @@
 public with sharing class Produto {
     
     private String nome;
-    private Dinheiro preco;
+    private Dinheiro precoBase;
+    private PoliticaDePreco politicaDePreco;
     
-    public Produto(String nome, Dinheiro preco) {
+    public Produto(String nome, Dinheiro precoBase) {
         this.nome = nome;
-        this.preco = preco;
+        this.precoBase = precoBase;
     }
 
     public String getNome() {
@@ -20,16 +21,18 @@ public with sharing class Produto {
     }
 
     public Dinheiro getPreco() {
-        return preco;
+        return precoBase;
     }
 
-    public void setPreco(Dinheiro preco) {
-        this.preco = preco;
+    public void setPreco(Dinheiro precoBase) {
+        this.precoBase = precoBase;
     }
 
 
     public override String toString() {
-        return nome + ' – R$' + preco.valor.setScale(2);
+        return nome + ' – R$' + precoBase.valor.setScale(2);
     }
+
+
 
 }
