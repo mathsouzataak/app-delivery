@@ -23,7 +23,7 @@ public with sharing class PoliticaPrecoComDescontoPercentual implements Politica
     }
 
     public Dinheiro calcularPreco(Produto produto) {
-        return new Dinheiro(produto.getPreco().multiplicar(1 - descontoPercentual));
+        return new Dinheiro(produto.getPrecoBase().multiplicar(1 - descontoPercentual));
     }
 
 }

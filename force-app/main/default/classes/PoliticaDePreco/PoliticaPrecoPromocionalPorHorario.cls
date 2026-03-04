@@ -1,6 +1,6 @@
 public with sharing class PoliticaPrecoPromocionalPorHorario implements PoliticaDePreco {
 
-    public Datetime horario;
+    private Datetime horario;
     private Decimal descontoPercentual;
     private Integer horaInicio;
     private Integer horaFim;
@@ -55,9 +55,9 @@ public with sharing class PoliticaPrecoPromocionalPorHorario implements Politica
     public Dinheiro calcularPreco(Produto produto) {
 
         if (horario.hour() > horaInicio && horario.hour() < horaFim) {
-            return new Dinheiro(produto.getPreco().multiplicar(1 - descontoPercentual));
+            return new Dinheiro(produto.getPrecoBase().multiplicar(1 - descontoPercentual));
         }
 
-        return produto.getPreco();
+        return produto.getPrecoBase();
     }
 }

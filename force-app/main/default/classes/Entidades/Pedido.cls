@@ -142,7 +142,6 @@ public with sharing class Pedido extends EntidadeBase {
         public Integer getQuantidade() {
             return quantidade;
         }
-
         private void setQuantidade(Integer quantidade) {
             if (quantidade <= 0) {
                 throw new IllegalArgumentException('A quantidade deve ser maior que zero');
@@ -157,7 +156,7 @@ public with sharing class Pedido extends EntidadeBase {
         }
 
         private void calcularSubtotal() {
-            subTotal = new Dinheiro(produto.getPreco().multiplicar(quantidade));
+            subTotal = new Dinheiro(produto.calcularPrecoFinal().multiplicar(quantidade));
         }
     }
 }
