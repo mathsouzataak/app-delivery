@@ -102,15 +102,6 @@ public with sharing class Pedido extends EntidadeBase {
         total = new Dinheiro(valor);
     }
 
-    public void confirmarPedido() {
-        if (status == StatusPedido.CARRINHO && !itens.isEmpty()) {
-            status = StatusPedido.EM_PROCESSAMENTO;
-            System.debug('O pedido foi confirmado e está sendo processado.');
-        } else {
-            System.debug('Não é possível confirmar o pedido.');
-        }
-    }
-
     public void exibirResumo() {
         System.debug('Cliente: ' + cliente.getNome());
         System.debug('Restaurante: ' + restaurante.getNome());
