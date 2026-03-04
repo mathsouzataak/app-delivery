@@ -1,7 +1,8 @@
 public with sharing class ProcessadorPedido {
 
     public static void confirmarPedido(Pedido pedido) {
-        if (pedido.getStatus() == StatusPedido.CARRINHO && !pedido.getItens().isEmpty()) {
+        if (pedido.getStatus() == StatusPedido.CARRINHO && !pedido.getItens().isEmpty() &&
+            pedido.getTotal().valor > 0) {
             pedido.setStatus(StatusPedido.EM_PROCESSAMENTO);
             System.debug('O pedido foi confirmado e está sendo processado.');
         } else {

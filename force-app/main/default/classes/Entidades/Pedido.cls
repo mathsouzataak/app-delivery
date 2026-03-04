@@ -29,9 +29,13 @@ public with sharing class Pedido extends EntidadeBase {
     public StatusPedido getStatus() {
         return status;
     }
-
     public void setStatus(StatusPedido status) {
         this.status = status; 
+    }
+
+    public Dinheiro getTotal() {
+        calcularTotal();
+        return total;
     }
 
     public void adicionarItemPedido(Produto produto, Integer quantidade) {
@@ -75,7 +79,7 @@ public with sharing class Pedido extends EntidadeBase {
 
     public ItemPedido buscarItem(Produto produto) {
         for (ItemPedido item : itens) {
-            if (item.produto == produto) {
+            if (item.getProduto() == produto) {
                 return item;
             }
         }
@@ -85,7 +89,7 @@ public with sharing class Pedido extends EntidadeBase {
 
     public Integer buscarIndexItem(Produto produto) {
         for (Integer i = 0; i < itens.size(); i++) {
-            if (itens[i].produto == produto) {
+            if (itens[i].getProduto() == produto) {
                 return i;
             }
         }
@@ -96,7 +100,7 @@ public with sharing class Pedido extends EntidadeBase {
     public void calcularTotal() {
         Decimal valor = 0;
         for (ItemPedido item : itens) {
-            valor += item.subTotal.valor;
+            valor += item.getSubTotal().valor;
         }
 
         total = new Dinheiro(valor);
@@ -107,11 +111,10 @@ public with sharing class Pedido extends EntidadeBase {
         System.debug('Restaurante: ' + restaurante.getNome());
         System.debug('Itens do pedido: ');
         for (ItemPedido item : itens) {
-            System.debug('\t' + item.produto.getNome() + ' (' + item.quantidade + 'x) - ' + 'R$' + item.getSubTotal().valor.setScale(2));
+            System.debug('\t' + item.getProduto().getNome() + ' (' + item.getQuantidade() + 'x) - R$' + item.getSubTotal().valor.setScale(2));
         }
 
-        calcularTotal();
-        System.debug('Total: R$' + total.valor.setScale(2));
+        System.debug('Total: R$' + getTotal().valor.setScale(2));
         System.debug('Status: ' + status.name());
     }
 
