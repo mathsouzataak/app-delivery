@@ -28,7 +28,7 @@ public with sharing class ProcessadorPedido {
         }
     }
 
-    public Dinheiro calcularTotalComFrete(Pedido pedido) {
+    public void calcularTotalComFrete(Pedido pedido) {
         Dinheiro totalPedido = pedido.calcularTotalBase().somar(pedido.getPoliticaFrete().calcularFrete(pedido));
         pedido.setTotal(totalPedido);
     }

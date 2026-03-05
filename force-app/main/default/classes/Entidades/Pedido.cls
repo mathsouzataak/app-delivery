@@ -38,7 +38,7 @@ public with sharing class Pedido extends EntidadeBase {
     public Dinheiro getTotal() {
         return total;
     }
-    public Dinheiro setTotal(Dinheiro total) {
+    public void setTotal(Dinheiro total) {
         this.total = total;
     }
 
@@ -71,7 +71,7 @@ public with sharing class Pedido extends EntidadeBase {
                 itens.add(new ItemPedido(produto, quantidade));
             }
             System.debug('Item adicionado ao pedido');
-            Processador procPedido = new ProcessadorPedido();
+            ProcessadorPedido procPedido = new ProcessadorPedido();
             procPedido.calcularTotalComFrete(this);
         } else {
             System.debug('Produto indisponível');
@@ -82,7 +82,7 @@ public with sharing class Pedido extends EntidadeBase {
         Integer index = buscarIndexItem(produto);
         if (index >= 0) {
             itens.remove(index);
-            Processador procPedido = new ProcessadorPedido();
+            ProcessadorPedido procPedido = new ProcessadorPedido();
             procPedido.calcularTotalComFrete(this);
         }
     }
@@ -94,7 +94,7 @@ public with sharing class Pedido extends EntidadeBase {
             ItemPedido item = buscarItem(produto);
             if (item != null) {
                 item.setQuantidade(novaQuantidade);
-                Processador procPedido = new ProcessadorPedido();
+                ProcessadorPedido procPedido = new ProcessadorPedido();
                 procPedido.calcularTotalComFrete(this);
             }
         }
