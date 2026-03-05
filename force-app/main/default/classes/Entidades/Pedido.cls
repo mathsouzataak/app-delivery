@@ -150,7 +150,7 @@ public with sharing class Pedido extends EntidadeBase {
         private Integer quantidade;
         private Dinheiro subTotal;
 
-        private ItemPedido(Produto produto, Integer quantidade) {
+        public ItemPedido(Produto produto, Integer quantidade) {
             this.produto = produto;
             setQuantidade(quantidade);
         }
@@ -162,8 +162,7 @@ public with sharing class Pedido extends EntidadeBase {
         public Integer getQuantidade() {
             return quantidade;
         }
-
-        private void setQuantidade(Integer quantidade) {
+        public void setQuantidade(Integer quantidade) {
             if (quantidade <= 0) {
                 throw new IllegalArgumentException('A quantidade deve ser maior que zero');
             }
