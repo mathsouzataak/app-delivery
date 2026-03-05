@@ -2,11 +2,13 @@ public with sharing class EstadoEmProcessamento extends EstadoPedido {
     
     public override void cancelar(Pedido pedido) {
         pedido.setStatus(StatusPedido.CANCELADO);
+        pedido.setEstadoPedido(new EstadoCancelado());
         System.debug('O pedido foi cancelado.');
     }
 
     public override void marcarComoEntregue(Pedido pedido) {
         pedido.setStatus(StatusPedido.ENTREGUE);
+        pedido.setEstadoPedido(new EstadoEntregue());
         System.debug('O pedido foi entregue.');
     }
 

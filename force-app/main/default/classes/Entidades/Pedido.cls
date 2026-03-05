@@ -6,6 +6,7 @@ public with sharing class Pedido extends EntidadeBase {
     private StatusPedido status;
     private Dinheiro total;
     private PoliticaDeFrete politicaFrete;
+    private EstadoPedido estadoPedido;
 
     public Pedido(Cliente cliente, Restaurante restaurante, PoliticaDeFrete politicaFrete) {
         this.cliente = cliente;
@@ -14,6 +15,7 @@ public with sharing class Pedido extends EntidadeBase {
         this.status = StatusPedido.CARRINHO;
         this.total = new Dinheiro(0);
         this.politicaFrete = politicaFrete;
+        this.estadoPedido = new EstadoCarrinho();
     }
 
     public Cliente getCliente() {
@@ -33,6 +35,13 @@ public with sharing class Pedido extends EntidadeBase {
     }
     public void setStatus(StatusPedido status) {
         this.status = status; 
+    }
+
+    public EstadoPedido getEstadoPedido() {
+        return estadoPedido;
+    }
+    public void setEstadoPedido(EstadoPedido estadoPedido) {
+        this.estadoPedido = estadoPedido;
     }
 
     public Dinheiro getTotal() {
@@ -59,32 +68,11 @@ public with sharing class Pedido extends EntidadeBase {
     }
 
     public void adicionarItemPedido(Produto produto, Integer quantidade) {
-        if (quantidade <= 0) {
-            throw new IllegalArgumentException('A quantidade não pode ser negativa');
-        }
-
-        if (restaurante.getCardapio().contains(produto)) {
-            ItemPedido item = buscarItem(produto);
-            if (item != null) {
-                item.setQuantidade(item.getQuantidade() + quantidade);
-            } else {
-                itens.add(new ItemPedido(produto, quantidade));
-            }
-            System.debug('Item adicionado ao pedido');
-            ProcessadorPedido procPedido = new ProcessadorPedido();
-            procPedido.calcularTotalComFrete(this);
-        } else {
-            System.debug('Produto indisponível');
-        }
+        estadoPedido.adicionarProduto(this, produto, quantidade);
     }
 
     public void removerProduto (Produto produto) {
-        Integer index = buscarIndexItem(produto);
-        if (index >= 0) {
-            itens.remove(index);
-            ProcessadorPedido procPedido = new ProcessadorPedido();
-            procPedido.calcularTotalComFrete(this);
-        }
+        estadoPedido.removerProduto(this, produto);
     }
 
     public void alterarQuantidade(Produto produto, Integer novaQuantidade) {

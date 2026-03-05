@@ -32,6 +32,7 @@ public with sharing class EstadoCarrinho extends EstadoPedido {
     public override void confirmar(Pedido pedido) {
         if (!pedido.getItens().isEmpty()) {
             pedido.setStatus(StatusPedido.EM_PROCESSAMENTO);
+            pedido.setEstadoPedido(new EstadoEmProcessamento());
             System.debug('O pedido foi confirmado e está sendo processado.');
         } else {
             System.debug('Não é possível confirmar o pedido.');
@@ -40,6 +41,7 @@ public with sharing class EstadoCarrinho extends EstadoPedido {
 
     public override void cancelar(Pedido pedido) {
         pedido.setStatus(StatusPedido.CANCELADO);
+        pedido.setEstadoPedido(new EstadoCancelado());
         System.debug('O pedido foi cancelado.');
     }
 
