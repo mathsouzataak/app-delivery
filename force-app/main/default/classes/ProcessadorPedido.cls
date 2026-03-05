@@ -12,14 +12,25 @@ public with sharing class ProcessadorPedido {
 
     public void cancelarPedido(Pedido pedido) {
         if (pedido.getStatus() == StatusPedido.EM_PROCESSAMENTO || pedido.getStatus() == StatusPedido.CARRINHO) {
+            pedido.setStatus(StatusPedido.CANCELADO);
             System.debug('O pedido foi cancelado.');
         } else {
             System.debug('O pedido não pôde ser cancelado.');
         }
     }
 
-    public void calcularPedidoComFrete() {
-        
+    public void entregarPedido(Pedido Pedido) {
+        if (pedido.getStatus() == StatusPedido.EM_PROCESSAMENTO) {
+            pedido.setStatus(StatusPedido.ENTREGUE);
+            System.debug('O pedido foi entregue.');
+        } else {
+            System.debug('O pedido não pode ser entregue.');
+        }
+    }
+
+    public Dinheiro calcularTotalComFrete(Pedido pedido) {
+        Dinheiro totalPedido = pedido.calcularTotalBase().somar(pedido.getPoliticaFrete().calcularFrete(pedido));
+        pedido.setTotal(totalPedido);
     }
 
 }

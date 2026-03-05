@@ -5,13 +5,15 @@ public with sharing class Pedido extends EntidadeBase {
     private List<ItemPedido> itens;
     private StatusPedido status;
     private Dinheiro total;
+    private PoliticaDeFrete politicaFrete;
 
-    public Pedido(Cliente cliente, Restaurante restaurante) {
+    public Pedido(Cliente cliente, Restaurante restaurante, PoliticaDeFrete politicaFrete) {
         this.cliente = cliente;
         this.restaurante = restaurante;
-        itens = new List<ItemPedido>();
-        status = StatusPedido.CARRINHO;
-        total = new Dinheiro(0);
+        this.itens = new List<ItemPedido>();
+        this.status = StatusPedido.CARRINHO;
+        this.total = new Dinheiro(0);
+        this.politicaFrete = politicaFrete;
     }
 
     public Cliente getCliente() {
@@ -34,8 +36,26 @@ public with sharing class Pedido extends EntidadeBase {
     }
 
     public Dinheiro getTotal() {
-        calcularTotal();
         return total;
+    }
+    public Dinheiro setTotal(Dinheiro total) {
+        this.total = total;
+    }
+
+    public PoliticaDeFrete getPoliticaFrete() {
+        return politicaFrete;
+    }
+    public void setPoliticaFrete(PoliticaDeFrete politicaFrete) {
+        this.politicaFrete = politicaFrete;
+    }
+
+    public Dinheiro calcularTotalBase() {
+        Decimal valor = 0;
+        for (ItemPedido item : itens) {
+            valor += item.getSubTotal().valor;
+        }
+
+        return new Dinheiro(valor);
     }
 
     public void adicionarItemPedido(Produto produto, Integer quantidade) {
@@ -51,7 +71,8 @@ public with sharing class Pedido extends EntidadeBase {
                 itens.add(new ItemPedido(produto, quantidade));
             }
             System.debug('Item adicionado ao pedido');
-            calcularTotal();
+            Processador procPedido = new ProcessadorPedido();
+            procPedido.calcularTotalComFrete(this);
         } else {
             System.debug('Produto indisponível');
         }
@@ -61,7 +82,8 @@ public with sharing class Pedido extends EntidadeBase {
         Integer index = buscarIndexItem(produto);
         if (index >= 0) {
             itens.remove(index);
-            calcularTotal();
+            Processador procPedido = new ProcessadorPedido();
+            procPedido.calcularTotalComFrete(this);
         }
     }
 
@@ -72,7 +94,8 @@ public with sharing class Pedido extends EntidadeBase {
             ItemPedido item = buscarItem(produto);
             if (item != null) {
                 item.setQuantidade(novaQuantidade);
-                calcularTotal();
+                Processador procPedido = new ProcessadorPedido();
+                procPedido.calcularTotalComFrete(this);
             }
         }
     } 
