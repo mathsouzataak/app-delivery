@@ -11,7 +11,7 @@ public with sharing class FretePorPercentualDoTotal implements PoliticaDeFrete {
     }
 
     public Dinheiro calcularFrete(Pedido pedido) {
-        return new Dinheiro(pedido.getTotal().multiplicar(percentual));
+        return pedido.getTotal().multiplicar(percentual);
     }
 
 }

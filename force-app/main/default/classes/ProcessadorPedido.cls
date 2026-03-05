@@ -1,6 +1,6 @@
 public with sharing class ProcessadorPedido {
 
-    public static void confirmarPedido(Pedido pedido) {
+    public void confirmarPedido(Pedido pedido) {
         if (pedido.getStatus() == StatusPedido.CARRINHO && !pedido.getItens().isEmpty() &&
             pedido.getTotal().valor > 0) {
             pedido.setStatus(StatusPedido.EM_PROCESSAMENTO);
@@ -10,12 +10,16 @@ public with sharing class ProcessadorPedido {
         }
     }
 
-    public static void cancelarPedido(Pedido pedido) {
-        if (pedido.getStatus() != StatusPedido.CANCELADO) {
-            System.debug('O pedido já está cancelado');
+    public void cancelarPedido(Pedido pedido) {
+        if (pedido.getStatus() == StatusPedido.EM_PROCESSAMENTO || pedido.getStatus() == StatusPedido.CARRINHO) {
+            System.debug('O pedido foi cancelado.');
         } else {
-            pedido.setStatus(StatusPedido.CANCELADO);
-            System.debug('O pedido foi cancelado');
+            System.debug('O pedido não pôde ser cancelado.');
         }
     }
+
+    public void calcularPedidoComFrete() {
+        
+    }
+
 }

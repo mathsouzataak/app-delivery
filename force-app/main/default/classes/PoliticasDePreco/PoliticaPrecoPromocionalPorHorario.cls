@@ -55,7 +55,7 @@ public with sharing class PoliticaPrecoPromocionalPorHorario implements Politica
     public Dinheiro calcularPreco(Produto produto) {
 
         if (horario.hour() > horaInicio && horario.hour() < horaFim) {
-            return new Dinheiro(produto.getPrecoBase().multiplicar(1 - descontoPercentual));
+            return produto.getPrecoBase().multiplicar(1 - descontoPercentual);
         }
 
         return produto.getPrecoBase();

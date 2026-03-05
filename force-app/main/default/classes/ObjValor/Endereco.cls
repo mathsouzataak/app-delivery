@@ -12,7 +12,13 @@ public with sharing class Endereco {
         this.cidade = cidade;
     }
 
-    public Boolean equals(Endereco endereco) {
+    public Boolean equals(Object obj) {
+        if (!(obj instanceof Endereco)){
+            return false;
+        }
+
+        Endereco endereco = (Endereco) obj;
+
         return this.logradouro == endereco.logradouro && this.numero == endereco.numero &&
                 this.complemento == endereco.complemento && this.cidade == endereco.cidade;
     }
