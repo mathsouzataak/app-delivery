@@ -1,15 +1,15 @@
 public with sharing class ProcessadorPedido {
 
     public void confirmarPedido(Pedido pedido) {
-        pedido.getEstadoPedido().confirmar(pedido);
+        pedido.getEstado().confirmar(pedido);
     }
 
     public void cancelarPedido(Pedido pedido) {
-        pedido.getEstadoPedido().cancelar(pedido);
+        pedido.getEstado().cancelar(pedido);
     }
 
     public void entregarPedido(Pedido Pedido) {
-        pedido.getEstadoPedido().marcarComoEntregue(pedido);
+        pedido.getEstado().marcarComoEntregue(pedido);
     }
 
     public void calcularTotalComFrete(Pedido pedido) {

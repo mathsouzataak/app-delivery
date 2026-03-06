@@ -1,14 +1,12 @@
 public with sharing class EstadoEmProcessamento extends EstadoPedido {
     
     public override void cancelar(Pedido pedido) {
-        pedido.setStatus(StatusPedido.CANCELADO);
-        pedido.setEstadoPedido(new EstadoCancelado());
+        pedido.setEstado(new EstadoCancelado());
         System.debug('O pedido foi cancelado.');
     }
 
     public override void marcarComoEntregue(Pedido pedido) {
-        pedido.setStatus(StatusPedido.ENTREGUE);
-        pedido.setEstadoPedido(new EstadoEntregue());
+        pedido.setEstado(new EstadoEntregue());
         System.debug('O pedido foi entregue.');
     }
 
@@ -17,11 +15,11 @@ public with sharing class EstadoEmProcessamento extends EstadoPedido {
     }
 
     public override void removerProduto(Pedido pedido, Produto produto) {
-        System.debug('Não é possível remover produtos. O pedido já foi confirmado.');
+        throw new TransicaoInvalidaException('Não é possível remover produtos. O pedido já foi confirmado.');
     }
 
     public override void confirmar(Pedido pedido) {
-        System.debug('O pedido já foi confirmado.');
+        throw new TransicaoInvalidaException('O pedido já foi confirmado.');
     }
 
 }

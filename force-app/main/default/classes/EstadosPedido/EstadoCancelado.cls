@@ -5,7 +5,7 @@ public with sharing class EstadoCancelado extends EstadoPedido {
     }
 
     public override void removerProduto(Pedido pedido, Produto produto) {
-        System.debug('O pedido já foi entregue.');
+        System.debug('O pedido está cancelado.');
     }
 
     public override void confirmar(Pedido pedido) {
@@ -13,11 +13,11 @@ public with sharing class EstadoCancelado extends EstadoPedido {
     }
 
     public override void cancelar(Pedido pedido) {
-        System.debug('O pedido está cancelado.');
+        throw new TransicaoInvalidaException('O pedido está cancelado.');
     }
 
     public override void marcarComoEntregue(Pedido pedido) {
-        System.debug('O pedido está cancelado.');
+        throw new TransicaoInvalidaException('O pedido está cancelado.');
     }
 
 }

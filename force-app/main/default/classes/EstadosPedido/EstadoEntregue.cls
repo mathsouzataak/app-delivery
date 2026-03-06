@@ -9,15 +9,15 @@ public with sharing class EstadoEntregue extends EstadoPedido {
     }
 
     public override void confirmar(Pedido pedido) {
-        System.debug('O pedido já foi entregue.');
+        throw new TransicaoInvalidaException('O pedido já foi entregue.');
     }
 
     public override void cancelar(Pedido pedido) {
-        System.debug('O pedido já foi entregue.');
+        throw new TransicaoInvalidaException('O pedido já foi entregue.');
     }
 
     public override void marcarComoEntregue(Pedido pedido) {
-        System.debug('O pedido já foi entregue.');
+        throw new TransicaoInvalidaException('O pedido já foi entregue.');
     }
 
 }

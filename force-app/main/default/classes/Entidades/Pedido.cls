@@ -3,19 +3,17 @@ public with sharing class Pedido extends EntidadeBase {
     private Cliente cliente;
     private Restaurante restaurante;
     private List<ItemPedido> itens;
-    private StatusPedido status;
     private Dinheiro total;
     private PoliticaDeFrete politicaFrete;
-    private EstadoPedido estadoPedido;
+    private EstadoPedido estado;
 
     public Pedido(Cliente cliente, Restaurante restaurante, PoliticaDeFrete politicaFrete) {
         this.cliente = cliente;
         this.restaurante = restaurante;
         this.itens = new List<ItemPedido>();
-        this.status = StatusPedido.CARRINHO;
         this.total = new Dinheiro(0);
         this.politicaFrete = politicaFrete;
-        this.estadoPedido = new EstadoCarrinho();
+        this.estado = new EstadoCarrinho();
     }
 
     public Cliente getCliente() {
@@ -30,18 +28,11 @@ public with sharing class Pedido extends EntidadeBase {
         return itens;
     }
 
-    public StatusPedido getStatus() {
-        return status;
+    public EstadoPedido getEstado() {
+        return estado;
     }
-    public void setStatus(StatusPedido status) {
-        this.status = status; 
-    }
-
-    public EstadoPedido getEstadoPedido() {
-        return estadoPedido;
-    }
-    public void setEstadoPedido(EstadoPedido estadoPedido) {
-        this.estadoPedido = estadoPedido;
+    public void setEstado(EstadoPedido estado) {
+        this.estado = estado;
     }
 
     public Dinheiro getTotal() {
@@ -68,11 +59,11 @@ public with sharing class Pedido extends EntidadeBase {
     }
 
     public void adicionarItemPedido(Produto produto, Integer quantidade) {
-        estadoPedido.adicionarProduto(this, produto, quantidade);
+        estado.adicionarProduto(this, produto, quantidade);
     }
 
     public void removerProduto (Produto produto) {
-        estadoPedido.removerProduto(this, produto);
+        estado.removerProduto(this, produto);
     }
 
     public void alterarQuantidade(Produto produto, Integer novaQuantidade) {
@@ -126,7 +117,7 @@ public with sharing class Pedido extends EntidadeBase {
         }
 
         System.debug('Total: R$' + getTotal().valor.setScale(2));
-        System.debug('Status: ' + status.name());
+        System.debug('Status: ' /*+ status.name()*/);
     }
 
     // TODO: ItemPedido e Pedido devem atualizar seus totais sempre que preço ou politica de um produto for alterado.
